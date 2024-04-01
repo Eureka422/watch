@@ -163,5 +163,4 @@ void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint
         disp_buf[i] = color;
     }
     qspi_write_data(0x2C, (uint8_t *)disp_buf - 1, size*2);
-    // qspi_write_data(0x3c, (uint8_t *)disp_buf - 1, size);
 }
