@@ -83,6 +83,7 @@ Display::Display(uint16_t width, uint16_t height)
     per.cmd.DdrMode = QSPI_DDR_MODE_DISABLE;
     per.cmd.DdrHoldHalfCycle = QSPI_DDR_HHC_ANALOG_DELAY;
     per.cmd.SIOOMode = QSPI_SIOO_INST_EVERY_CMD;
+
 }
 
 void Display::qspi_write_cmd(uint8_t addr, uint8_t *data, uint32_t size)
@@ -108,28 +109,29 @@ void Display::qspi_write_data(uint8_t addr, uint8_t *data, uint32_t size)
     HAL_QSPI_Transmit(&per.hqspi, data, HAL_QPSI_TIMEOUT_DEFAULT_VALUE);
 }
 
+
+/**
+ * @brief Initializes the display.
+ * 
+ * This function initializes the display by performing the following steps:
+ * 1. Sets the RESET pin to LOW for 10 milliseconds.
+ * 2. Sets the RESET pin to HIGH.
+ * 3. Executes a series of initialization commands stored in the `init_cmds` array.
+ * 
+ * @note This function assumes that the GPIO pins and QSPI interface have been properly configured.
+ */
 void Display::init(void)
 {
-    // MX_GPIO_Init();
-    // MX_QUADSPI_Init();
 
-    HAL_GPIO_WritePin(pin.gpio, pin.res, GPIO_PIN_RESET); // RESET---LOW
+    HAL_GPIO_WritePin(pin.gpio, GPIO_PIN_2, GPIO_PIN_RESET); // RESET---LOW
     HAL_Delay(10);
-    HAL_GPIO_WritePin(pin.gpio, pin.res, GPIO_PIN_SET); // RESET---HIGH
+    HAL_GPIO_WritePin(pin.gpio, GPIO_PIN_2, GPIO_PIN_SET); // RESET---HIGH
     HAL_Delay(50);
     for (uint32_t i = 0; i < sizeof(init_cmds) / sizeof(init_cmd_t); i++)
     {
         qspi_write_cmd(init_cmds[i].cmd, init_cmds[i].data, init_cmds[i].data_bytes);
         HAL_Delay(init_cmds[i].delay_ms);
     }
-
-    // HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);   // PWR OFF
-    // HAL_Delay(10);
-    // for (uint32_t i = 0; i < sizeof(partial_cmds) / sizeof(init_cmd_t); i++)
-    // {
-    //     qspi_write_cmd(partial_cmds[i].cmd, partial_cmds[i].data, partial_cmds[i].data_bytes);
-    //     HAL_Delay(partial_cmds[i].delay_ms);
-    // }
 }
 
 void Display::set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
@@ -143,36 +145,20 @@ void Display::set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
     qspi_write_cmd(0x2b, data, 4);
 }
 
-void Display::fill(uint16_t color)
-{
-    set_window(0, 0, 367, disp_height - 1);
-    for (uint32_t i = 0; i < 368 * disp_height; i = i + 2)
-    {
-        disp_buf[i] = color >> 8;
-        disp_buf[i + 1] = color && 0xFF;
-    }
-    qspi_write_data(0x2C, (uint8_t *)disp_buf, 368 * disp_height);
-    qspi_write_data(0x3C, (uint8_t *)disp_buf, 368 * disp_height);
-}
-
+/**
+ * Fills a rectangular area on the display with a specified color.
+ *
+ * @param x1 The starting x-coordinate of the area.
+ * @param y1 The starting y-coordinate of the area.
+ * @param x2 The ending x-coordinate of the area.
+ * @param y2 The ending y-coordinate of the area.
+ * @param color The color to fill the area with.
+ */
 void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)
 {
-    uint8_t data[4] = {x1 >> 8, x1 & 0xFF, x2 >> 8, x2 & 0xFF};
-    qspi_write_cmd(0x2a, data, 4);
-    data[0] = y1 >> 8;
-    data[1] = y1 & 0xFF;
-    data[2] = y2 >> 8;
-    data[3] = y2 & 0xFF;
-    qspi_write_cmd(0x2b, data, 4);
-    // for (uint32_t i = 0; i < (x2 - x1 + 1) * (y2 - y1 + 1); i = i + 2)
-    // {
-    //     disp_buf[i] = color & 0xff;
-    //     disp_buf[i + 1] = color >> 8;
-    // }
-    // qspi_write_data(0x2C, (uint8_t *)disp_buf, (x2 - x1 + 1) * (y2 - y1 + 1));
-    // qspi_write_data(0x3C, (uint8_t *)disp_buf, (x2 - x1 + 1) * (y2 - y1 + 1));
     uint32_t size = (x2 - x1 + 1) * (y2 - y1 + 1);
     size = (size >> 1) << 1;
+    set_window(x1, y1, x2, y2);
     for (uint32_t i = 0; i < (x2 - x1 + 1) * (y2 - y1 + 1); i++)
     {
         disp_buf[i] = color;

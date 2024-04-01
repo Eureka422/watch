@@ -1,18 +1,15 @@
 #include "hal.h"
 
-LED HAL::led0(GPIOA, GPIO_PIN_15);
+LED HAL::led0(LED0_GPIO_PORT, LED0_PIN);
 Display HAL::display(368, 448);
 
 void HAL::init(void)
 {
     display.init();
-    display.fill(0x0000);
-//     display.fill_area(0, 0, 367, 447, 0x0000);
-//     HAL_Delay(10);
-//     display.qspi_write_cmd(0x23, NULL, 0);
-//     HAL_Delay(10);
-//     display.fill_area(0, 0, 49, 49, 0x07E0);
 }
+
+
+
 
 
 

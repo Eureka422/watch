@@ -1,15 +1,17 @@
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 #include "hal_conf.h"
-#include "gpio.h"
-#include "quadspi.h"
 
+
+/**
+ * @brief Structure representing an initialization command for the display.
+ */
 typedef struct
 {
-    uint8_t cmd;
-    uint8_t *data;
-    uint32_t data_bytes;
-    uint32_t delay_ms;
+    uint8_t cmd;          /**< The command byte. */
+    uint8_t *data;        /**< Pointer to the data buffer. */
+    uint32_t data_bytes;  /**< The number of data bytes. */
+    uint32_t delay_ms;    /**< The delay in milliseconds after sending the command. */
 } init_cmd_t;
 
 static const init_cmd_t init_cmds[] = {
@@ -53,16 +55,13 @@ public:
     Display(uint16_t width, uint16_t height);
     ~Display(){}
 
-    // 使用QSPI发送命令, 111线模式
-    void qspi_write_cmd(uint8_t addr, uint8_t *data, uint32_t size);
-    // 使用QSPI发送数据, 114线模式
-    void qspi_write_data(uint8_t addr, uint8_t *data, uint32_t size);
-    // 初始化显示屏
-    void init(void);
-    void set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
-    void fill(uint16_t color);
 
-    void fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+    void qspi_write_cmd(uint8_t addr, uint8_t *data, uint32_t size);    // 使用QSPI发送命令, 111线模式
+    void qspi_write_data(uint8_t addr, uint8_t *data, uint32_t size);   // 使用QSPI发送数据, 114线模式
+
+    void init(void);    // 初始化显示屏
+    void set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);    // 设置显示窗口
+    void fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color); // 填充矩形区域
 };
 
 
