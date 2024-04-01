@@ -22,18 +22,13 @@ void led_task(void *pvParameters)
 
 void disp_task(void *pvParameters)
 {
-    // uint8_t data[1] = {0x00};
     while (1)
     {
-        HAL::display.fill_area(100, 100, 155, 155, 0xF800);
+        HAL::display.fill_area(0, 0, DISPLAY_WIDTH - 1, buf_height - 100, 0xf800);
         vTaskDelay(1000);
-        // HAL::display.fill_area(100, 100, 155, 155, 0x07E0);
-        // vTaskDelay(1000);
-        HAL::display.fill_area(100, 100, 155, 155, 0xFFFF);
+        HAL::display.fill_area(0, 0, DISPLAY_WIDTH - 1, buf_height - 100, 0x07e0);
         vTaskDelay(1000);
-        // HAL::display.fill_area(100, 100, 155, 155, 0x3000);
-        // vTaskDelay(1000);
-        // printf("display task\r\n");
-        // HAL_Delay(1000);
+        HAL::display.fill_area(0, 0, DISPLAY_WIDTH - 1, buf_height - 100, 0x001F);
+        vTaskDelay(1000);
     }
 }

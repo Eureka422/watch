@@ -2,7 +2,7 @@
 #define __DISPLAY_H__
 #include "hal_conf.h"
 
-
+#define buf_height 224
 /**
  * @brief Structure representing an initialization command for the display.
  */

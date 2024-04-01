@@ -1,7 +1,6 @@
 #include "display.h"
 
-#define disp_height 224
-static uint16_t disp_buf[368 * disp_height];
+static uint16_t disp_buf[DISPLAY_WIDTH * buf_height];
 
 Display::Display(uint16_t width, uint16_t height)
     : _width(width), _height(height), pin(), per()
@@ -163,5 +162,6 @@ void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint
     {
         disp_buf[i] = color;
     }
-    qspi_write_data(0x2C, (uint8_t *)disp_buf, size*2);
+    qspi_write_data(0x2C, (uint8_t *)disp_buf - 1, size*2);
+    // qspi_write_data(0x3c, (uint8_t *)disp_buf - 1, size);
 }
