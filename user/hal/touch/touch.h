@@ -7,9 +7,9 @@ class Touch
 {
     typedef struct
     {
-        GPIO_TypeDef *gpio = nullptr;
-        uint16_t res = 0;
-        uint16_t irq = 0;
+        GPIO_TypeDef *gpio = GPIOB;
+        uint16_t res = GPIO_PIN_5;
+        uint16_t irq = GPIO_PIN_4;
     } pin_t;
     typedef struct
     {
@@ -23,9 +23,12 @@ class Touch
 public:
     TouchPoint_t tp;
     pin_t pin;
+    per_t per;
 public:
     Touch(void);
     ~Touch() {};
+
+    void init(void);
 };
 
 
