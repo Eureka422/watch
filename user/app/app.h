@@ -9,5 +9,6 @@
 void app_init(void);
 void led_task(void *pvParameters);
 void disp_task(void *pvParameters);
+void touch_task(void *pvParameters);
 
 #endif // __APP_H__

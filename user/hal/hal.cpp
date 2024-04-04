@@ -2,12 +2,15 @@
 
 LED HAL::led0(LED0_GPIO_PORT, LED0_PIN);
 Display HAL::display(368, 448);
+Touch HAL::touch;
 
 void HAL::init(void)
 {
     display.init();
     display.fill_area(0, 0, DISPLAY_WIDTH - 1, 224 - 1, 0x0000);
     display.fill_area(0, 224, DISPLAY_WIDTH - 1, 448 - 1, 0X0000);
+
+    touch.init();
 }
 
 

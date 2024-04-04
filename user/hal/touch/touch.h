@@ -13,15 +13,19 @@ class Touch
     } pin_t;
     typedef struct
     {
+        uint8_t addr = 0x38;
         I2C_HandleTypeDef hi2c;
     } per_t;
     typedef struct
     {
-        uint16_t x = 0;
-        uint16_t y = 0;
+        uint8_t event = 0;
+        uint8_t id = 0;
+        int x = -1;
+        int y = -1;
     } TouchPoint_t;
+    
 public:
-    TouchPoint_t tp;
+    TouchPoint_t _tp;
     pin_t pin;
     per_t per;
 public:
@@ -29,6 +33,8 @@ public:
     ~Touch() {};
 
     void init(void);
+    void read(void);
+    void get_tp(TouchPoint_t *tp);
 };
 
 
