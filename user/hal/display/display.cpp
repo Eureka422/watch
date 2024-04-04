@@ -135,7 +135,11 @@ void Display::init(void)
 
 void Display::set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 {
-    uint8_t data[4] = {x1 >> 8, x1 & 0xFF, x2 >> 8, x2 & 0xFF};
+    uint8_t data[4];
+    data[0] = x1 >> 8;
+    data[1] = x1 & 0xFF;
+    data[2] = x2 >> 8;
+    data[3] = x2 & 0xFF;
     qspi_write_cmd(0x2a, data, 4);
     data[0] = y1 >> 8;
     data[1] = y1 & 0xFF;
@@ -158,7 +162,7 @@ void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint
     uint32_t size = (x2 - x1 + 1) * (y2 - y1 + 1);
     size = (size >> 1) << 1;
     set_window(x1, y1, x2, y2);
-    for (uint32_t i = 0; i < (x2 - x1 + 1) * (y2 - y1 + 1); i++)
+    for (uint32_t i = 0; i < size; i++)
     {
         disp_buf[i] = color;
     }
