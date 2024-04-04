@@ -42,5 +42,5 @@ Touch::Touch(void)
 void Touch::init(void)
 {
     /* 初始化触摸屏 */
-    uint8_t data[2] = {0};
+    // uint8_t data[2] = {0};
 }
