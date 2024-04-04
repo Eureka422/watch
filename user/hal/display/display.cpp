@@ -1,7 +1,5 @@
 #include "display.h"
 
-static uint16_t disp_buf[DISPLAY_WIDTH * buf_height];
-
 Display::Display(uint16_t width, uint16_t height)
     : _width(width), _height(height), pin(), per()
 {
@@ -157,14 +155,10 @@ void Display::set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
  * @param y2 The ending y-coordinate of the area.
  * @param color The color to fill the area with.
  */
-void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color)
+void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t* color)
 {
     uint32_t size = (x2 - x1 + 1) * (y2 - y1 + 1);
     size = (size >> 1) << 1;
     set_window(x1, y1, x2, y2);
-    for (uint32_t i = 0; i < size; i++)
-    {
-        disp_buf[i] = color;
-    }
-    qspi_write_data(0x2C, (uint8_t *)disp_buf - 1, size*2);
+    qspi_write_data(0x2C, (uint8_t *)color - 1, size*2);
 }

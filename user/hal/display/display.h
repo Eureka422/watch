@@ -61,7 +61,7 @@ public:
 
     void init(void);    // 初始化显示屏
     void set_window(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);    // 设置显示窗口
-    void fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color); // 填充矩形区域
+    void fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t* color); // 填充矩形区域
 };
 
 
