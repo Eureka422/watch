@@ -4,7 +4,15 @@
 .vscode/launch.json
 .vscode/ipch
 .vscode
+<<<<<<< HEAD
+include/CMSIS
+include/STM32F4xx_HAL_Driver
+lib/FreeRTOS/*
+!lib/FreeRTOS/FreeRTOSConfig
+bsp/
+=======
 include/
 lib/
 
 
+>>>>>>> a6b71015356a8e0ca2db25aecc4e2a07dcd82cc3
