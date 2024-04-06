@@ -160,5 +160,5 @@ void Display::fill_area(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint
     uint32_t size = (x2 - x1 + 1) * (y2 - y1 + 1);
     size = (size >> 1) << 1;
     set_window(x1, y1, x2, y2);
-    qspi_write_data(0x2C, (uint8_t *)color - 1, size*2);
+    qspi_write_data(0x2C, (uint8_t*)color-1, size*2);
 }

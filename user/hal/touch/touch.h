@@ -20,8 +20,8 @@ class Touch
     {
         uint8_t event = 0;
         uint8_t id = 0;
-        int x = -1;
-        int y = -1;
+        int16_t x = -1;
+        int16_t y = -1;
     } TouchPoint_t;
     
 public:
@@ -34,7 +34,8 @@ public:
 
     void init(void);
     void read(void);
-    void get_tp(TouchPoint_t *tp);
+    bool is_pressed(void);
+    void get_tp(int16_t *x, int16_t *y);
 };
 
 

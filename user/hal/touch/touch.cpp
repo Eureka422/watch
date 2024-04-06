@@ -51,6 +51,10 @@ void Touch::init(void)
     HAL_GPIO_WritePin(pin.gpio, pin.res, GPIO_PIN_SET);
     HAL_Delay(50);
 
+
+
+
+
 }
 
 void Touch::read(void)
@@ -67,12 +71,19 @@ void Touch::read(void)
     }
 }
 
-void Touch::get_tp(TouchPoint_t *tp)
+bool Touch::is_pressed(void)
+{
+    /* 判断是否有触摸点 */
+    return _tp.event != 0;
+}
+
+void Touch::get_tp(int16_t *x, int16_t *y)
 {
     /* 获取触摸点 */
-    tp->x = _tp.x;
-    tp->y = _tp.y;
+    *x = _tp.x;
+    *y = _tp.y;
     /* 清空触摸点 */
+    _tp.event = 0;
     _tp.x = -1;
     _tp.y = -1;
 }
