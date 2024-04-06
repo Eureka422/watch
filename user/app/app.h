@@ -5,6 +5,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "ui/demo.h"
+#include "pages/page1.h"
 
 
 void app_init(void);

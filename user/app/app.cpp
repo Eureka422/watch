@@ -31,18 +31,16 @@ void disp_task(void *pvParameters)
 {
     lv_obj_t *screen = lv_obj_create(NULL);
     lv_obj_set_style_bg_color(screen, lv_color_black(), LV_PART_MAIN);
-    demo_create(screen);
-
-    lv_obj_t *label = lv_label_create(screen);
-    lv_obj_set_style_text_color(label, lv_color_white(), 0);
-    lv_obj_align(label, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_obj_set_size(screen, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+    lv_obj_clear_flag(screen, LV_OBJ_FLAG_SCROLLABLE);
+    Page1 page1;    
+    page1.create(screen);
     lv_scr_load(screen);
     while (1)
     {
         xSemaphoreTake(MutexSemaphore, portMAX_DELAY);
-        lv_label_set_text_fmt(label, "count: %d", count);
+        // lv_label_set_text_fmt(label, "count: %d", count);
         lv_timer_handler();
-        printf("lvgl timer handler\r\n");
         xSemaphoreGive(MutexSemaphore);
         vTaskDelay(5);
     }
