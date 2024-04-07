@@ -39,7 +39,7 @@ void disp_task(void *pvParameters)
     while (1)
     {
         xSemaphoreTake(MutexSemaphore, portMAX_DELAY);
-        // lv_label_set_text_fmt(label, "count: %d", count);
+        lv_label_set_text_fmt(page1.ui.clock.minute, "%d", count);
         lv_timer_handler();
         xSemaphoreGive(MutexSemaphore);
         vTaskDelay(5);
