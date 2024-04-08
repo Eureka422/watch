@@ -18,16 +18,16 @@ void Page1::create_top(lv_obj_t* parent)
     lv_obj_set_style_bg_opa(cont, LV_OPA_COVER, 0);
     lv_obj_set_style_bg_color(cont, lv_color_hex(0x333333), 0);
     lv_obj_set_style_radius(cont, 8, 0);
-    lv_obj_align(cont, LV_ALIGN_TOP_MID, +15, 0);
+    lv_obj_align(cont, LV_ALIGN_TOP_MID, 0, 0);
     ui.top.cont = cont;
 
     // 创建一个电池
     lv_obj_t* bat = lv_bar_create(cont);
     lv_bar_set_value(bat, 25, LV_ANIM_OFF);
     lv_bar_set_start_value(bat, 0, LV_ANIM_OFF);
-    lv_obj_set_width(bat, 25);
-    lv_obj_set_height(bat, 15);
-    lv_obj_align(bat, LV_ALIGN_LEFT_MID, 0, 0);
+    lv_obj_set_width(bat, 40);
+    lv_obj_set_height(bat, 24);
+    lv_obj_align(bat, LV_ALIGN_LEFT_MID, +15, 0);
     lv_obj_set_style_radius(bat, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(bat, lv_color_hex(0x636060), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(bat, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -38,12 +38,19 @@ void Page1::create_top(lv_obj_t* parent)
     ui.top.bat = bat;
 
     // 创建一个wifi
-    lv_obj_t* wifi = lv_obj_create(cont);
-    lv_obj_set_size(wifi, 20, 20);
+    lv_obj_t* wifi = lv_label_create(cont);
+    lv_label_set_text(wifi, LV_SYMBOL_WIFI);
+    lv_obj_set_style_text_font(wifi, &lv_font_montserrat_24, 0);
     lv_obj_align(wifi, LV_ALIGN_RIGHT_MID, -25, 0);
-    lv_obj_set_style_radius(wifi, 5, 0);
-    lv_obj_set_style_bg_color(wifi, lv_color_hex(0x636060), 0);
+    lv_obj_set_style_text_color(wifi, lv_color_white(), 0);
     ui.top.wifi = wifi;
+
+    // 创建一个名字
+    lv_obj_t* name = lv_label_create(cont);
+    lv_label_set_text(name, "EUREKA");
+    lv_obj_align(name, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_set_style_text_color(name, lv_color_hex(0xffffff), 0);
+    ui.top.name = name;
 }
 
 void Page1::create_clock(lv_obj_t* parent)
@@ -56,27 +63,26 @@ void Page1::create_clock(lv_obj_t* parent)
     lv_obj_align(cont, LV_ALIGN_CENTER, 0, -80);
     ui.clock.cont = cont;
 
+    LV_FONT_DECLARE(lv_gaoel_num_font_64)
     lv_obj_t* hour = lv_label_create(cont);
     lv_label_set_text(hour, "00");
-    lv_obj_set_style_text_font(hour, &lv_font_montserrat_48, 0);
+    lv_obj_set_style_text_font(hour, &lv_gaoel_num_font_64, 0);
     lv_obj_set_style_text_color(hour, lv_color_hex(0xffffff), 0);
-    lv_obj_align(hour, LV_ALIGN_CENTER, -50, 0);
+    lv_obj_align(hour, LV_ALIGN_CENTER, -60, 0);
     ui.clock.hour = hour;
 
     lv_obj_t* symbal = lv_label_create(cont);
     lv_label_set_text(symbal, ":");
-    lv_obj_set_style_text_font(symbal, &lv_font_montserrat_48, 0);
+    // lv_obj_set_style_text_font(symbal, &lv_font_montserrat_48, 0);
     lv_obj_set_style_text_color(symbal, lv_color_hex(0xffffff), 0);
     lv_obj_align(symbal, LV_ALIGN_CENTER, 0, 0);
     ui.clock.symbal = symbal;
 
     lv_obj_t* minute = lv_label_create(cont);
     lv_label_set_text(minute, "00");
-    //设置字体大小
-
-    lv_obj_set_style_text_font(minute, &lv_font_montserrat_48, 0);
+    lv_obj_set_style_text_font(minute, &lv_gaoel_num_font_64, 0);
     lv_obj_set_style_text_color(minute, lv_color_hex(0xffffff), 0);
-    lv_obj_align(minute, LV_ALIGN_CENTER, 50, 0);
+    lv_obj_align(minute, LV_ALIGN_CENTER, 60, 0);
     ui.clock.minute = minute;
 }
 
@@ -114,6 +120,7 @@ void Page1::create_btn(lv_obj_t* parent)
     lv_obj_set_style_radius(cont, 0, 0);
     lv_obj_align(cont, LV_ALIGN_BOTTOM_MID, 0, 0);
     ui.btn.cont = cont;
+
 
     lv_obj_t* btn1 = lv_btn_create(cont);
     lv_obj_set_size(btn1, 75, 50);

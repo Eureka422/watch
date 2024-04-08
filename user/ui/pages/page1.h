@@ -11,6 +11,7 @@ public:
             lv_obj_t* cont;
             lv_obj_t* bat;
             lv_obj_t* wifi;
+            lv_obj_t* name;
         } top;
         struct {
             lv_obj_t* cont;
