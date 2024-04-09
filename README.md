@@ -1,6 +1,5 @@
 # watch
 
-<img src="D:\soft\else\Tencent\WeChat\WechatFile\WeChat Files\wxid_en3b487n7zeg22\FileStorage\Temp\fd3a2a41aed930bb02453e2b0f487c3.jpg" alt="fd3a2a41aed930bb02453e2b0f487c3" style="zoom:10%;" />
 
 ## 硬件
 - board:源地stm32f412ret6
