@@ -1,5 +1,6 @@
 # watch
 
+<img src=https://github.com/Eureka422/watch/blob/main/image/watch.jpg width = "100" alt="watch.jpg" />
 
 ## 硬件
 - board:源地stm32f412ret6
